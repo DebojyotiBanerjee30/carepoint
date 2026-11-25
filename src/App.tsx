@@ -1,9 +1,44 @@
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router";
+import DashboardLayout from "./layouts/DashboardLayout";
+import { patientNavigation } from "./config/navigation";
+import DashboardPage from "./pages/patient/DashboardPage";
+import AppointmentsPage from "./pages/patient/AppointmentsPage";
+import DoctorsPage from "./pages/patient/DoctorsPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/patient",
+    element: (
+      <DashboardLayout
+        items={patientNavigation}
+        userName="Rahul Sharma"
+        userRole="Patient"
+      />
+    ),
+
+    children: [
+      {
+        index: true,
+        element: <Navigate to="dashboard" replace />,
+      },
+      {
+        path: "dashboard",
+        element: <DashboardPage />,
+      },
+      {
+        path: "appointments",
+        element: <AppointmentsPage />,
+      },
+      {
+        path: "doctors",
+        element: <DoctorsPage />,
+      },
+    ],
+  },
+]);
+
 function App() {
-  return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-700">CarePoint is Ready!</h1>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
